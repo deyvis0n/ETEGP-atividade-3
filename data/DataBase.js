@@ -6,7 +6,7 @@ class DataBase {
     const itemsSalvos = await this.pegarTodosOsItems()
     if (id) {
       const itemId = await itemsSalvos.findIndex(item => item.id === id)
-      itemsSalvos[index] = item
+      itemsSalvos[itemId] = item
     } else {
       itemsSalvos.push(item)
     }
@@ -27,10 +27,10 @@ class DataBase {
   }
 
   async deletarItemPorId(id) {
-    const itemSalvo = await this.pegarTodosOsItems()
+    let itemSalvo = await this.pegarTodosOsItems()
     const itemId = await itemSalvo.findIndex(item => item.id === id)
-    const semItemDeletado = itemSalvo.splice(itemId, 1)
-    return AsyncStorage.setItem('items', JSON.stringify(semItemDeletado))
+    itemSalvo.splice(itemId, 1)
+    return AsyncStorage.setItem('items', JSON.stringify(itemSalvo))
   }
 
   async limpardDb() {
